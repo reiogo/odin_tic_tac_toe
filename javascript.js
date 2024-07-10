@@ -65,17 +65,44 @@ const gameFlow = (function (
   
   let currentPlayer = players[0];
 
-  const switchTurn = () => {
+  const switchTurns = () => {
     if (currentPlayer = players[0]) {
       currentPlayer = players[1];
     } else {
       currentPlayer = players[0]
     }
   }
-    
-    
-
   
+  const getCurrentPlayer = () => currentPlayer;
+
+  const printNewRound = () => {
+    gameboard.printBoard();
+    console.log(`${getCurrentPlayer().name}'s turn.`
+  }
+
+  const checkWonOrNot = (
+
+  const playRound = (row, column) => {
+    console.log (
+      `Marking for ${getCurrentPlayer().name}'s on column ${column}`.);
+    gameboard.addMark(row, column, getCurrentPlayer().token);
+    checkWonOrNot
+   if (won) {
+    console.log ( `${getCurrentPlayer().name} won!`);
+   }
+   
+
+
+    switchTurns();
+    printNewRound();
+  }
+  printNewRound();
+  return {
+    playRound,
+    getCurrentPlayer,
+  }
+  
+
 })();
 
 
