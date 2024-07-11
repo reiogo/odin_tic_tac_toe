@@ -17,8 +17,9 @@ const gameboard = (function (){
   const markCell = (row, column, player) => {
     if (board[row][column].getValue() === 0) {
       board[row][column].addMark(player);
+      return true;
     } else {
-      return;
+      return false;
     }
   }
 
@@ -122,17 +123,30 @@ const gameFlow = (function (
     checkingCounterDiagonal = 0;
     return results
   }
+  const checkForTies = () => { 
+    
+    
+  }
+  
   
   const playRound = (row, column) => {
+    if (!gameboard.markCell(row, column, getCurrentPlayer().token)){
+      console.log( `That square is taken, try again`);
+      printNewRound();
+
+    } else {
     console.log (
       `Marking for ${getCurrentPlayer().name} on row ${row} and column ${column}.`);
-    gameboard.markCell(row, column, getCurrentPlayer().token);
-  
-    if (checkForWinner(row, column)) {
-     console.log ( `${getCurrentPlayer().name} won!`);
-    } else {
-    switchTurns();
-    printNewRound();
+
+      if (checkForWinner(row, column)) {
+       console.log ( `${getCurrentPlayer().name} won!`);
+      } else if (checkForTies()){
+        console.log (`You're tied! GameOver!`);
+      }
+      else {
+      switchTurns();
+      printNewRound();
+      }
     }
   }
   printNewRound();
@@ -140,8 +154,6 @@ const gameFlow = (function (
     playRound,
     getCurrentPlayer,
   }
-  
-
 })();
 
 
