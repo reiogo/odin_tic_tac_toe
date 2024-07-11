@@ -22,6 +22,14 @@ const gameboard = (function (){
       return false;
     }
   }
+  const resetBoard = () => {
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        board[i][j].addMark(0);
+      }
+    }
+  }
+  
 
   const printBoard = () => {
     const boardWithCellValues = board.map((row) => 
@@ -29,7 +37,7 @@ const gameboard = (function (){
       console.log(boardWithCellValues);
   };
 
-  return { getBoard, markCell, printBoard };
+  return { getBoard, markCell, printBoard, resetBoard};
 })();
 
 
@@ -123,11 +131,22 @@ const gameFlow = (function (
     checkingCounterDiagonal = 0;
     return results
   }
-  const checkForTies = () => { 
+
+  const checkForTies = (row, column) => { 
+    const checkSet = new Set();
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        checkSet.add(gameboard.getBoard()[i][j].getValue());
+        }
+      }
+    if (checkSet.has(0)) {
+      return false
+    } else {
+      return true
+    }
     
     
   }
-  
   
   const playRound = (row, column) => {
     if (!gameboard.markCell(row, column, getCurrentPlayer().token)){
@@ -140,12 +159,13 @@ const gameFlow = (function (
 
       if (checkForWinner(row, column)) {
        console.log ( `${getCurrentPlayer().name} won!`);
-      } else if (checkForTies()){
+      } else if (checkForTies(row, column)){
         console.log (`You're tied! GameOver!`);
-      }
-      else {
-      switchTurns();
-      printNewRound();
+        gameboard.resetBoard();
+        printNewRound();
+      } else {
+        switchTurns();
+        printNewRound();
       }
     }
   }
