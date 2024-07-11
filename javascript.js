@@ -80,14 +80,50 @@ const gameFlow = (function (
     console.log(`${getCurrentPlayer().name}'s turn.`
   }
 
-  const checkWonOrNot = (
+  const checkForWinner = (row, column) => {
+    for (let i = 0; i > 2; i++) {
+      if (gameboard.getBoard[i][column] == getCurrentPlayer().token) {
+        let checkingCounterRow += 1;
+      }
+    }
+    
+    for (let j = 0; j > 2; j++) {
+      if (gameboard.getBoard[row][j] == getCurrentPlayer().token) {
+        let checkingCounterColumn += 1;
+      }
+    }
 
+    if ( 
+    gameboard.getBoard[0][0] == getCurrentPlayer().token &
+    gameboard.getBoard[1][1] == getCurrentPlayer().token &
+    gameboard.getBoard[2][2] == getCurrentPlayer().token &
+    ) {
+     let checkingCounterDiagonal += 3;
+    } else if ( 
+    gameboard.getBoard[2][2] == getCurrentPlayer().token &
+    gameboard.getBoard[1][1] == getCurrentPlayer().token &
+    gameboard.getBoard[0][0] == getCurrentPlayer().token &
+    ) {
+     checkingCounterDiagonal += 3;
+    }
+
+    if (checkingCounterRow == 3 || checkingCounterColumn == 3 || checkingCounterDiagonal == 3){
+      let results = true;
+    } else {
+      let results = false;
+    }
+    checkingCounterRow = 0;
+    checkingCounterColumn = 0;
+    checkingCounterDiagonal = 0;
+    return results
+  }
+  
   const playRound = (row, column) => {
     console.log (
       `Marking for ${getCurrentPlayer().name}'s on column ${column}`.);
     gameboard.addMark(row, column, getCurrentPlayer().token);
-    checkWonOrNot
-   if (won) {
+  
+   if (checkForWinner) {
     console.log ( `${getCurrentPlayer().name} won!`);
    }
    
