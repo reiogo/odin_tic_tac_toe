@@ -15,7 +15,7 @@ const gameboard = (function (){
   const getBoard = () => board;
 
   const markCell = (row, column, player) => {
-    if (board[row][column].getValue === 0) {
+    if (board[row][column].getValue() === 0) {
       board[row][column].addMark(player);
     } else {
       return;
@@ -66,10 +66,10 @@ const gameFlow = (function (
   let currentPlayer = players[0];
 
   const switchTurns = () => {
-    if (currentPlayer = players[0]) {
+    if (currentPlayer == players[0]) {
       currentPlayer = players[1];
     } else {
-      currentPlayer = players[0]
+      currentPlayer = players[0];
     }
   }
   
@@ -77,41 +77,46 @@ const gameFlow = (function (
 
   const printNewRound = () => {
     gameboard.printBoard();
-    console.log(`${getCurrentPlayer().name}'s turn.`
+    console.log(`${getCurrentPlayer().name}'s turn.`);
   }
 
   const checkForWinner = (row, column) => {
-    for (let i = 0; i > 2; i++) {
-      if (gameboard.getBoard[i][column] == getCurrentPlayer().token) {
-        let checkingCounterRow += 1;
+    let checkingCounterRow = 0;
+    let checkingCounterColumn = 0;
+    let checkingCounterDiagonal = 0;
+    let results = false;
+    for (let i = 0; i < 3; i++) {
+      if (gameboard.getBoard()[i][column].getValue() == getCurrentPlayer().token) {
+        checkingCounterRow += 1;
       }
     }
     
-    for (let j = 0; j > 2; j++) {
-      if (gameboard.getBoard[row][j] == getCurrentPlayer().token) {
-        let checkingCounterColumn += 1;
+    for (let j = 0; j < 3; j++) {
+      if (gameboard.getBoard()[row][j].getValue() == getCurrentPlayer().token) {
+        checkingCounterColumn += 1;
       }
     }
 
     if ( 
-    gameboard.getBoard[0][0] == getCurrentPlayer().token &
-    gameboard.getBoard[1][1] == getCurrentPlayer().token &
-    gameboard.getBoard[2][2] == getCurrentPlayer().token &
+    gameboard.getBoard()[0][0].getValue() == getCurrentPlayer().token &
+    gameboard.getBoard()[1][1].getValue() == getCurrentPlayer().token &
+    gameboard.getBoard()[2][2].getValue() == getCurrentPlayer().token 
     ) {
-     let checkingCounterDiagonal += 3;
+      checkingCounterDiagonal += 3;
     } else if ( 
-    gameboard.getBoard[2][2] == getCurrentPlayer().token &
-    gameboard.getBoard[1][1] == getCurrentPlayer().token &
-    gameboard.getBoard[0][0] == getCurrentPlayer().token &
+    gameboard.getBoard()[2][2].getValue() == getCurrentPlayer().token &
+    gameboard.getBoard()[1][1].getValue() == getCurrentPlayer().token &
+    gameboard.getBoard()[0][0].getValue() == getCurrentPlayer().token
     ) {
-     checkingCounterDiagonal += 3;
+      checkingCounterDiagonal += 3;
     }
 
     if (checkingCounterRow == 3 || checkingCounterColumn == 3 || checkingCounterDiagonal == 3){
-      let results = true;
+      results = true;
     } else {
-      let results = false;
+      results = false;
     }
+
     checkingCounterRow = 0;
     checkingCounterColumn = 0;
     checkingCounterDiagonal = 0;
@@ -120,17 +125,15 @@ const gameFlow = (function (
   
   const playRound = (row, column) => {
     console.log (
-      `Marking for ${getCurrentPlayer().name}'s on column ${column}`.);
-    gameboard.addMark(row, column, getCurrentPlayer().token);
+      `Marking for ${getCurrentPlayer().name} on row ${row} and column ${column}.`);
+    gameboard.markCell(row, column, getCurrentPlayer().token);
   
-   if (checkForWinner) {
-    console.log ( `${getCurrentPlayer().name} won!`);
-   }
-   
-
-
+    if (checkForWinner(row, column)) {
+     console.log ( `${getCurrentPlayer().name} won!`);
+    } else {
     switchTurns();
     printNewRound();
+    }
   }
   printNewRound();
   return {
