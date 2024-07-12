@@ -6,11 +6,12 @@ body {
   display: flex;
   justify-content: center;
 }
-.container {
+.game-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 50vh;
+  display: none;
 }
 
 .turn {
@@ -21,34 +22,34 @@ body {
 }
 
 .board {
-  width: 410px;
-  height: 410px;
+  width: 340px;
+  height: 340px;
   justify-content: center;
   align-content: center;
   display: grid;
-  grid-template: repeat(3, 120px)/repeat(3, 120px);
-  gap: 18px;
+  grid-template: repeat(3, 100px)/repeat(3, 100px);
+  gap: 14px;
   padding: 15px;
   border-radius: 50px;
   background: #31c0d3;
-  box-shadow:  41px 41px 82px #2aa3b3,
-               -41px -41px 82px #38ddf3;
+  box-shadow:  34px 34px 68px #2aa3b3,
+               -34px -34px 68px #38ddf3;
 }
 
 .cell {
-  color: rgba(249, 238, 202, 0.5);
-  text-shadow: 2px 5px 5px rgba(249, 238, 202, 0.2);
-
+  color: rgba(249, 238, 202, 0.8);
   appearance: none;
   border: none;
   font-size: 7rem;
   line-height: 2rem;
   margin: 0;
   padding: 0;
-  border-radius: 25px;
+  border-radius: 18px;
   background: #31c0d3;
-  box-shadow: inset 12px 12px 24px #2aa3b3,
-              inset -12px -12px 24px #38ddf3;
+  box-shadow: inset 10px 10px 20px #2aa3b3,
+              inset -10px -10px 20px #38ddf3;
 }
 
-
+.names {
+  margin: 45px;
+}

@@ -56,21 +56,23 @@ function cell() {
 
 
 // Gameflow
-const gameFlow = (function (
-  playerOneName = "player 1",
-  playerTwoName = "player 2"
-){
-
+const gameFlow = (function (){
   const players = [
     {
-      name: playerOneName,
+      name: "Player 1",
       token: 1
     },
     {
-      name: playerTwoName,
+      name: "Player 2",
       token: 2
     }
   ];
+  const setPlayerNames = (player1, player2) => {
+    players[0].name = player1;
+    players[1].name = player2;
+    
+  }
+  
   
   let currentPlayer = players[0];
 
@@ -170,6 +172,7 @@ const gameFlow = (function (
   }
   printNewRound();
   return {
+    setPlayerNames,
     playRound,
     getCurrentPlayer
   }
@@ -180,16 +183,47 @@ const gameFlow = (function (
 const displayController = (function() { 
   const boardDiv = document.querySelector('.board');
   const playerTurnDiv = document.querySelector('.turn');
+  const nameForm = document.querySelector('.names');
+
+  const setNames = (event) => {
+    event.preventDefault();
+    
+    let player1;
+    let player2;
+    if (event.target.querySelector("#user1").value == "") {
+      player1 = "Player 1"; 
+    } else {
+      player1 = event.target.querySelector("#user1").value
+    }
+    if (event.target.querySelector("#user2").value == "") {
+      player2 = "Player 2"; 
+    } else {
+      player2 = event.target.querySelector("#user2").value
+    }
+    
+    gameFlow.setPlayerNames(player1, player2);
+    const nameContainer = 
+      document.querySelector(".name-container");
+    nameContainer.style.display = "none";
+    const gameContainer =
+      document.querySelector(".game-container");
+    gameContainer.style.display = "block";
+    const currentPlayer = gameFlow.getCurrentPlayer();
+    playerTurnDiv.textContent = `${currentPlayer.name}'s turn.`
+    
+  }
+  
+  nameForm.addEventListener("submit", setNames)
 
   const updateScreen = () => {
     boardDiv.textContent = "";
   
     // Update board and player turn 
     const board = gameboard.getBoard();
-    const activePlayer = gameFlow.getCurrentPlayer();
 
     // Display player turn
-    playerTurnDiv.textContent = `${activePlayer.name}'s turn.`
+    const currentPlayer = gameFlow.getCurrentPlayer();
+    playerTurnDiv.textContent = `${currentPlayer.name}'s turn.`
     
     //Render board squares
     board.forEach((row, rowIndex) => {
@@ -223,6 +257,13 @@ const displayController = (function() {
   boardDiv.addEventListener("click", boardClick); 
 
   updateScreen();
+
+  const resetButton = document.querySelector(".restart");
+  resetButton.addEventListener("click", () => {
+    gameboard.resetBoard();
+    updateScreen();
+  });
+  
 
 })();
 
