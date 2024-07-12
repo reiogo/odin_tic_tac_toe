@@ -1,10 +1,50 @@
 body {
   font-family: Arial, sans-serif;
   font-size: 22px;
-  line-height: 1.5rem;
+  line-height: 2rem;
   background-color: #31c0d3;
   display: flex;
   justify-content: center;
+  color: white ;
+}
+
+input {
+  color: white ;
+  font-size: 1.6rem;
+  margin: 0;
+  padding: 0;
+  background: #31c0d3;
+  height: 2rem;
+  border: 1px solid white;
+}
+
+::placeholder {
+  font-size: 1.6rem;
+  color: white ;
+}
+
+label {
+  margin-bottom: 40px;
+}
+
+.name-container button,
+.endscreen button,
+.restart
+{
+  margin: 40px;
+  height: 2rem;
+  font-size: 1.6rem;
+  color: white ;
+  background: #31c0d3;
+  border: 1px solid white;
+  
+}
+
+li {
+  margin: 30px 0;
+  padding: 0;
+  list-style: none;
+  font-size: 1.6rem;
 }
 .game-container {
   display: flex;
@@ -58,15 +98,19 @@ body {
 .win-screen {
   display: none;
   visibility: hidden;
+  margin: 40px;
+  font-size: 1.6rem;
 }
 
 .tie-screen {
   display: none;
   visibility: hidden;
+  margin: 40px;
+  font-size: 1.6rem;
 }
 
 .back-to-game {
   display: none;
   visibility: hidden;
-  
 }
+

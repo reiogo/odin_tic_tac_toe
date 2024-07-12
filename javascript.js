@@ -266,7 +266,7 @@ const displayController = (function() {
 
         winScreen.style.display = "flex";
         winScreen.style.visibility = "visible";
-        winScreen.textContent += `${currentPlayer.name}, You Won!\n Congratulations!`
+        winScreen.textContent = `${currentPlayer.name}, You Won!\n Congratulations!`
 
         backToGameButton.textContent = "New Game?";
         backToGameButton.style.display = "block";
@@ -279,7 +279,7 @@ const displayController = (function() {
 
         tieScreen.style.display = "flex";
         tieScreen.style.visibility = "visible";
-        tieScreen.textContent += `You tied!`
+        tieScreen.textContent = `You tied!`
 
         backToGameButton.textContent = "New Game?";
         backToGameButton.style.display = "block";
@@ -307,17 +307,20 @@ const displayController = (function() {
 
   boardDiv.addEventListener("click", boardClick); 
   newGameAfterEndScreen.addEventListener("click",()=> {
-        winScreen.style.display = "none";
-        winScreen.style.visibility = "hidden";
+    winScreen.style.display = "none";
+    winScreen.style.visibility = "hidden";
 
-        tieScreen.style.display = "none";
-        tieScreen.style.visibility = "hidden";
+    tieScreen.style.display = "none";
+    tieScreen.style.visibility = "hidden";
 
-        gameContainer.style.display = "flex";
-        gameContainer.style.visibility = "visible";
-    
-        backToGameButton.style.display = "none";
-        backToGameButton.style.visibility = "hidden";
+    gameContainer.style.display = "flex";
+    gameContainer.style.visibility = "visible";
+
+    backToGameButton.style.display = "none";
+    backToGameButton.style.visibility = "hidden";
+
+    gameboard.resetBoard();
+    updateScreen();
     
   })
   
