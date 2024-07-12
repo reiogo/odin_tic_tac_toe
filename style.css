@@ -54,3 +54,13 @@ body {
 .names {
   margin: 45px;
 }
+
+.win-screen {
+  display: none;
+  visibility: hidden;
+}
+
+.tie-screen {
+  display: none;
+  visibility: hidden;
+}

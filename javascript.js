@@ -160,10 +160,10 @@ const gameFlow = (function (){
 
       if (checkForWinner(row, column)) {
        console.log ( `${getCurrentPlayer().name} won!`);
-        gameboard.resetBoard();
+        // gameboard.resetBoard();
       } else if (checkForTies(row, column)){
         console.log (`You're tied! GameOver!`);
-        gameboard.resetBoard();
+        // gameboard.resetBoard();
         printNewRound();
       } else {
         switchTurns();
@@ -175,7 +175,9 @@ const gameFlow = (function (){
   return {
     setPlayerNames,
     playRound,
-    getCurrentPlayer
+    getCurrentPlayer,
+    checkForWinner,
+    checkForTies
   }
 })();
 
@@ -208,7 +210,7 @@ const displayController = (function() {
     nameContainer.style.display = "none";
     const gameContainer =
       document.querySelector(".game-container");
-    gameContainer.style.display = "block";
+    gameContainer.style.display = "flex";
     gameContainer.style.visibility = "visible";
     const currentPlayer = gameFlow.getCurrentPlayer();
     playerTurnDiv.textContent = `${currentPlayer.name}'s turn.`
@@ -245,15 +247,52 @@ const displayController = (function() {
       })
     })
   }
+  // endScreen
+    const endScreen = (winOrTie) => {
+      const gameContainer =
+        document.querySelector(".game-container");
+      const winScreen = 
+        document.querySelector(".win-screen");
+      const tieScreen = 
+        document.querySelector(".tie-screen");
+      const currentPlayer =
+        gameFlow.getCurrentPlayer();
+
+      if (winOrTie == "win") {
+        console.log("hello");
+        gameContainer.style.display = "none";
+        gameContainer.style.visibility = "hidden";
+
+        winScreen.style.display = "flex";
+        winScreen.style.visibility = "visible";
+        winScreen.textContent = `${currentPlayer.name}, You Won!\n Congratulations!`
+         
+      } else if (winOrTie == "tie") {
+        gameContainer.style.display = "none";
+        gameContainer.style.visibility = "hidden";
+
+        tieScreen.style.display = "flex";
+        tieScreen.style.visibility = "visible";
+        tieScreen.textContent = `You tied!`
+
+      }
+    }
+
   // Event listener
   function boardClick(event) {
     const selectedColumn = event.target.dataset.column;
     const selectedRow = event.target.dataset.row;
-    console.log(selectedColumn);
     if(!selectedColumn || !selectedRow) return;
 
     gameFlow.playRound(selectedRow, selectedColumn);
-    updateScreen();
+
+    if (gameFlow.checkForWinner(selectedRow, selectedColumn)) {
+      endScreen("win");
+    } else if(gameFlow.checkForTies(selectedRow, selectedColumn)) {
+      endScreen("tie");
+    } else {
+      updateScreen();
+    }
   }
 
   boardDiv.addEventListener("click", boardClick); 
