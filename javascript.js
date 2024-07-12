@@ -120,6 +120,7 @@ const gameFlow = (function (){
     gameboard.getBoard()[0][0].getValue() == getCurrentPlayer().token
     ) {
       checkingCounterDiagonal += 3;
+      console.log("hello");
     }
 
     if (checkingCounterRow == 3 || checkingCounterColumn == 3 || checkingCounterDiagonal == 3){
@@ -208,6 +209,7 @@ const displayController = (function() {
     const gameContainer =
       document.querySelector(".game-container");
     gameContainer.style.display = "block";
+    gameContainer.style.visibility = "visible";
     const currentPlayer = gameFlow.getCurrentPlayer();
     playerTurnDiv.textContent = `${currentPlayer.name}'s turn.`
     
