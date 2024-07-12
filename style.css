@@ -12,6 +12,7 @@ body {
   align-items: center;
   width: 50vh;
   display: none;
+  visibility:hidden;
 }
 
 .turn {
