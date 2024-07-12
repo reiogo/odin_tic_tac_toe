@@ -144,8 +144,6 @@ const gameFlow = (function (
     } else {
       return true
     }
-    
-    
   }
   
   const playRound = (row, column) => {
@@ -159,6 +157,7 @@ const gameFlow = (function (
 
       if (checkForWinner(row, column)) {
        console.log ( `${getCurrentPlayer().name} won!`);
+        gameboard.resetBoard();
       } else if (checkForTies(row, column)){
         console.log (`You're tied! GameOver!`);
         gameboard.resetBoard();
@@ -172,13 +171,59 @@ const gameFlow = (function (
   printNewRound();
   return {
     playRound,
-    getCurrentPlayer,
+    getCurrentPlayer
   }
 })();
 
 
 // Display Controller
 const displayController = (function() { 
+  const boardDiv = document.querySelector('.board');
+  const playerTurnDiv = document.querySelector('.turn');
+
+  const updateScreen = () => {
+    boardDiv.textContent = "";
+  
+    // Update board and player turn 
+    const board = gameboard.getBoard();
+    const activePlayer = gameFlow.getCurrentPlayer();
+
+    // Display player turn
+    playerTurnDiv.textContent = `${activePlayer.name}'s turn.`
+    
+    //Render board squares
+    board.forEach((row, rowIndex) => {
+      row.forEach((cell, columnIndex) => {
+        const cellButton = document.createElement("button");
+        cellButton.classList.add("cell");
+        cellButton.dataset.row = rowIndex;
+        cellButton.dataset.column = columnIndex;
+        if (cell.getValue() == 0) {
+          cellButton.textContent = " ";
+        } else if (cell.getValue() == 1) {
+          cellButton.textContent = "o";
+        } else if (cell.getValue() == 2) {
+          cellButton.textContent = "x";
+        }
+        boardDiv.appendChild(cellButton);
+      })
+    })
+  }
+  // Event listener
+  function boardClick(event) {
+    const selectedColumn = event.target.dataset.column;
+    const selectedRow = event.target.dataset.row;
+    console.log(selectedColumn);
+    if(!selectedColumn || !selectedRow) return;
+
+    gameFlow.playRound(selectedRow, selectedColumn);
+    updateScreen();
+  }
+
+  boardDiv.addEventListener("click", boardClick); 
+
+  updateScreen();
 
 })();
+
 
