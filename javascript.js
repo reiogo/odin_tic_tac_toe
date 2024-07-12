@@ -115,9 +115,9 @@ const gameFlow = (function (){
     ) {
       checkingCounterDiagonal += 3;
     } else if ( 
-    gameboard.getBoard()[2][2].getValue() == getCurrentPlayer().token &
+    gameboard.getBoard()[0][2].getValue() == getCurrentPlayer().token &
     gameboard.getBoard()[1][1].getValue() == getCurrentPlayer().token &
-    gameboard.getBoard()[0][0].getValue() == getCurrentPlayer().token
+    gameboard.getBoard()[2][0].getValue() == getCurrentPlayer().token
     ) {
       checkingCounterDiagonal += 3;
       console.log("hello");
