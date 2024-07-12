@@ -187,6 +187,19 @@ const displayController = (function() {
   const boardDiv = document.querySelector('.board');
   const playerTurnDiv = document.querySelector('.turn');
   const nameForm = document.querySelector('.names');
+  const newGameAfterEndScreen = document.querySelector('.back-to-game');
+  const nameContainer = 
+    document.querySelector(".name-container");
+  const gameContainer =
+    document.querySelector(".game-container");
+  const winScreen = 
+    document.querySelector(".win-screen");
+  const tieScreen = 
+    document.querySelector(".tie-screen");
+  const currentPlayer =
+    gameFlow.getCurrentPlayer();
+  const backToGameButton =
+    document.querySelector(".back-to-game");
 
   const setNames = (event) => {
     event.preventDefault();
@@ -205,11 +218,7 @@ const displayController = (function() {
     }
     
     gameFlow.setPlayerNames(player1, player2);
-    const nameContainer = 
-      document.querySelector(".name-container");
     nameContainer.style.display = "none";
-    const gameContainer =
-      document.querySelector(".game-container");
     gameContainer.style.display = "flex";
     gameContainer.style.visibility = "visible";
     const currentPlayer = gameFlow.getCurrentPlayer();
@@ -249,14 +258,6 @@ const displayController = (function() {
   }
   // endScreen
     const endScreen = (winOrTie) => {
-      const gameContainer =
-        document.querySelector(".game-container");
-      const winScreen = 
-        document.querySelector(".win-screen");
-      const tieScreen = 
-        document.querySelector(".tie-screen");
-      const currentPlayer =
-        gameFlow.getCurrentPlayer();
 
       if (winOrTie == "win") {
         console.log("hello");
@@ -265,7 +266,12 @@ const displayController = (function() {
 
         winScreen.style.display = "flex";
         winScreen.style.visibility = "visible";
-        winScreen.textContent = `${currentPlayer.name}, You Won!\n Congratulations!`
+        winScreen.textContent += `${currentPlayer.name}, You Won!\n Congratulations!`
+
+        backToGameButton.textContent = "New Game?";
+        backToGameButton.style.display = "block";
+        backToGameButton.style.visibility = "visible";
+        
          
       } else if (winOrTie == "tie") {
         gameContainer.style.display = "none";
@@ -273,7 +279,11 @@ const displayController = (function() {
 
         tieScreen.style.display = "flex";
         tieScreen.style.visibility = "visible";
-        tieScreen.textContent = `You tied!`
+        tieScreen.textContent += `You tied!`
+
+        backToGameButton.textContent = "New Game?";
+        backToGameButton.style.display = "block";
+        backToGameButton.style.visibility = "visible";
 
       }
     }
@@ -296,6 +306,21 @@ const displayController = (function() {
   }
 
   boardDiv.addEventListener("click", boardClick); 
+  newGameAfterEndScreen.addEventListener("click",()=> {
+        winScreen.style.display = "none";
+        winScreen.style.visibility = "hidden";
+
+        tieScreen.style.display = "none";
+        tieScreen.style.visibility = "hidden";
+
+        gameContainer.style.display = "flex";
+        gameContainer.style.visibility = "visible";
+    
+        backToGameButton.style.display = "none";
+        backToGameButton.style.visibility = "hidden";
+    
+  })
+  
 
   updateScreen();
 
