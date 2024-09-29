@@ -1,5 +1,6 @@
 # odin_tic_tac_toe
-The Odin Project - A project based on the classic tic tac toe game
+Classic Tic Tac Toe game. Design comes from neumorphism (https://neumorphism.io/#e0e0e0).
 
-Inspired by: https://www.theodinproject.com/lessons/node-path-javascript-tic-tac-toe
-
+# Tech Stack:
+- HTML, CSS
+- Javascript (Factory functions, Immediately Invoked Function Expressions (IIFE))
